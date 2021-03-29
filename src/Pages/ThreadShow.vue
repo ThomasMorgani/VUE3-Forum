@@ -1,27 +1,26 @@
 <template>
-  <div class="col-large push-top">
-    <h2>{{ thread.title }}</h2>
-    <div class="post-list">
-      <div v-for="postId in thread.posts" :key="postId" class="post">
-        <div class="user-info">
-          <a href="#" class="user-name">{{ userById(postById(postId).userId).name }}</a>
-          <a href="#" class="user-name"><img :src="userById(postById(postId).userId).avatar" alt="" class="avatar-large"/></a>
-          <p class="desktop-only text-small">10 posts</p>
-        </div>
-        <div class="post-content">
-          <p>{{ postById(postId).text }}</p>
-        </div>
-      </div>
+  <div>
+    <div v-if="!thread" class="col-full text-center">
+      <h2>Thread not found</h2>
+      <router-link :to="{ name: 'Home' }">VIEW ALL THREADS</router-link>
+    </div>
+    <div v-else class="col-large push-top">
+      <h2>{{ thread.title }}</h2>
+      <PostList :posts="threadPosts"></PostList>
     </div>
   </div>
 </template>
 
 <script>
+  import PostList from '@/components/PostList'
   import sourceData from '@/data/data.json'
   export default {
     name: 'PageThreadShow',
     props: {
       id: String,
+    },
+    components: {
+      PostList,
     },
     data: () => ({
       posts: sourceData.posts,
@@ -32,13 +31,8 @@
       thread() {
         return this.threads.find(t => t.id === this.id)
       },
-    },
-    methods: {
-      postById(postId) {
-        return this.posts.find(p => p.id === postId)
-      },
-      userById(userId) {
-        return this.users.find(u => u.id === userId)
+      threadPosts() {
+        return this.posts.filter(p => p.threadId === this.id)
       },
     },
     created() {},
