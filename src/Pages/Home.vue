@@ -1,25 +1,25 @@
 <template>
   <div class="container">
     <h1>Welcome to the Forum</h1>
-    <ThreadList :threads="threads"></ThreadList>
+    <ForumList :forums="forums"></ForumList>
   </div>
 </template>
 
 <script>
   import sourceData from '@/data/data.json'
   console.log(sourceData)
-  import ThreadList from '@/components/ThreadList'
+  import ForumList from '@/components/ForumList'
   export default {
-    name: 'HelloWorld',
+    name: 'Home',
     components: {
-      ThreadList,
+      ForumList,
     },
     props: {
       msg: String,
     },
     data: () => ({
       posts: sourceData.posts,
-      threads: sourceData.threads,
+      forums: sourceData.forums,
       users: sourceData.users,
     }),
     methods: {

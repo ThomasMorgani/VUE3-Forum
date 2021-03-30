@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link :to="{ name: 'Home' }">BACK TO THREADS</router-link>
     <div v-if="!thread" class="col-full text-center">
       <h2>Thread not found</h2>
       <router-link :to="{ name: 'Home' }">VIEW ALL THREADS</router-link>
