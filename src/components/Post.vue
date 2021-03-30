@@ -8,12 +8,19 @@
     <div class="post-content">
       <p>{{ post.text }}</p>
     </div>
+    <div :title="timestampHuman(post.publishedAt)" class="post-date text-faded">
+      {{ timeagoHuman(post.publishedAt) }}
+    </div>
   </div>
 </template>
 
 <script>
   import sourceData from '@/data/data.json'
-
+  import dayjs from 'dayjs'
+  import localizedDate from 'dayjs/plugin/localizedFormat'
+  import relativeTime from 'dayjs/plugin/relativeTime'
+  dayjs.extend(localizedDate)
+  dayjs.extend(relativeTime)
   export default {
     name: 'Post',
     props: {
@@ -26,6 +33,12 @@
       users: sourceData.users,
     }),
     methods: {
+      timeagoHuman(timestamp) {
+        return dayjs.unix(timestamp).fromNow()
+      },
+      timestampHuman(timestamp) {
+        return dayjs.unix(timestamp).format('llll')
+      },
       userById(userId) {
         return this.users.find(u => u.id === userId)
       },
