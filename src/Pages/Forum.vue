@@ -10,7 +10,8 @@
   </div>
 
   <div class="col-full push-top">
-    <ThreadList :threads="threads"></ThreadList>
+    <p v-if="!threads || threads.length < 1">No active threads found for {{ forum.name }}</p>
+    <ThreadList v-else :threads="threads"></ThreadList>
   </div>
 </template>
 
